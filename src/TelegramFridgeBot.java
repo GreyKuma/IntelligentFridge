@@ -10,12 +10,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class TelegramFridgeBot extends TelegramLongPollingBot {
-    final String database = "***REMOVED***";
-    final String user = "***REMOVED***";
-    final String password = "***REMOVED***";
+    Properties fridgeproperties = readConfigs.getProperties("config\\fridge.xml");
+    final String user = fridgeproperties.getProperty("DBuser");
+    final String password = fridgeproperties.getProperty("DBpassword");
+    final String database = fridgeproperties.getProperty("DBurl");
 
+    Properties botproperties = readConfigs.getProperties("config\\bot.xml");
+    final String botname = botproperties.getProperty("botname");
+    final String bottoken = botproperties.getProperty("bottoken");
 
     public static void main(String[] args){
         System.out.println("Initializing API Context...");
@@ -32,6 +37,7 @@ public class TelegramFridgeBot extends TelegramLongPollingBot {
     }
 
     @Override
+    //TODO make ever answer 1 message
     public void onUpdateReceived(Update update){
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -95,12 +101,12 @@ public class TelegramFridgeBot extends TelegramLongPollingBot {
     }
     @Override
     public String getBotUsername() {
-        return "***REMOVED***";
+        return botname;
     }
 
     @Override
     public String getBotToken() {
-        return "***REMOVED***";
+        return bottoken;
     }
 
     public boolean isInteger( String input ) {

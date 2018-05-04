@@ -1,12 +1,15 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
 
 public class Fridge {
     public static void main(String[] args){
-        final String user = "***REMOVED***";
-        final String password = "***REMOVED***";
-        final String database = "***REMOVED***";
+        Properties properties = readConfigs.getProperties("config\\fridge.xml");
+        final String user = properties.getProperty("DBuser");
+        final String password = properties.getProperty("DBpassword");
+        final String database = properties.getProperty("DBurl");
         System.out.println("Connecting...");
         try(Connection connection = DriverManager.getConnection(database, user, password)) {
             System.out.println("Successfully Connected!");
